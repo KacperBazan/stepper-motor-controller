@@ -2,7 +2,7 @@
   <h1>stepper-motor-controller</h1>
 	<blockquote>
 		<p><i>Controlling multiple stepper motors with A4988 stepper motor drivers.</i></p>
-		<p><b>The inspiration for this piece of software arose from a personal project regarding my [Rubik's Cube solver](https://github.com/KacperBazan/RubiksCube). The code isn't particularly complex, but it is my first attempt at using the PlatformIO extension in Visual Studio Code to maintain my Arduino projects.</b></p>
+		<p><b>The inspiration for this piece of software arose from a personal project regarding my <a href="https://github.com/KacperBazan/RubiksCube">Rubik's Cube solver</a>. The code isn't particularly complex, but it is my first attempt at using the PlatformIO extension in Visual Studio Code to maintain my Arduino projects.</b></p>
 		<img src=https://img.shields.io/badge/Build-Working-brightgreen> <img src=https://img.shields.io/badge/License-MIT-yellow>
 		<img src=https://img.shields.io/badge/Progress-Incomplete-red>
 	</blockquote>
