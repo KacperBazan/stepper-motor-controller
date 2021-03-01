@@ -1,10 +1,12 @@
 /*
- * Program Name: ESP32 Stepper Motor
- * Program Description: Use the ESP32 board to drive a bipolar stepper motor.
+ * Program Name: stepper-motor-controller
+ * Program Description: Use the ESP32 board and buttons to drive multiple bipolar stepper motors.
  * Board Type: ESP2 DOIT-DEVKIT-V1
  * Date Started: Feb/24/2021
  * Author: Kacper Bazan
  * Author Link: https://github.com/KacperBazan
+ * 
+ * I am happy to recieve pull requests and comments!
  */
 
 /*
