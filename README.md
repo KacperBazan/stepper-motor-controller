@@ -11,7 +11,7 @@
 - Feb/28/2021: Code only includes personal definitions of one motor.
 
 ## Images
-![alt text](No pictures just yet)
+![alt text](https://github.com/KacperBazan/stepper-motor-controller/blob/main/img/Motor%20Image.png)
 
 ## Credits
 - **[DroneBot Workshop](https://www.youtube.com/channel/UCzml9bXoEM0itbcE96CB03w)** - Included incredibly detailed tutorials on the ESP32 board, stepper motor functionality, and setting up the Visual Studio Code coding environment. Great stepping stone for beginner Mechatronics.
