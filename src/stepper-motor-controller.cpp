@@ -71,11 +71,11 @@ void ToggleEnables(int state)
   }
 }
 
-//Check the rising edge of a particular button and invert a toggle variable
+/* Check the rising edge of a particular button and invert a toggle variable, as well as the enables of motors. */
 void ToggleButton(int num)
 {
   num--;
-  if (millis() - curTime > td) //Set a time delay to prevent immediate bouncing of the toggle value.
+  if (millis() - curTime > td) //Prevents bouncing of toggle.
   {
     buttonState[num] = digitalRead(BUTTON[num]);
     if (buttonState[num] != lastButtonState[num])
@@ -92,6 +92,7 @@ void ToggleButton(int num)
   }
 }
 
+/* Reads a button and returns true or false depending if pressed down. */
 bool ReadButton(int num)
 {
   num--;
@@ -109,6 +110,8 @@ bool ReadButton(int num)
 }
 
 /*
+ * Rotates a desired motor a number of steps at a desired speed.
+ *
  * motor -> which motor you're selecting ranging from 1 to 6.
  * d     -> direction motor will spin (clockwise or anti-clockwise).
  * s     -> how many steps the motor will spin.
@@ -116,13 +119,12 @@ bool ReadButton(int num)
  */
 void Rotate(int motor, int d, int s, int t)
 {
-  motor--;
-  digitalWrite(MOTORS[motor][0], d);
+  digitalWrite(MOTORS[motor - 1][0], d);
   int c = 0;
   for (int i = 0; i < 2 * s; i++)
   {
     c = !c;
-    digitalWrite(MOTORS[motor][1], c);
+    digitalWrite(MOTORS[motor - 1][1], c);
     delay(t / (2 * s));
   }
 }
@@ -131,41 +133,44 @@ void loop()
 {
   ToggleButton(1);
   if (ReadButton(2))
+  {
+    int MAXSPEED = 400;
     switch (moveCounter)
     {
     case 0: //90 degree turn Clockwise
-      Rotate(1, 1, STEPS / 4, 250);
+      Rotate(1, 1, STEPS / 4, MAXSPEED/4);
       moveCounter++;
       break;
     case 1: //90 degree turn Counter - Clockwise
-      Rotate(1, 0, STEPS / 4, 250);
+      Rotate(1, 0, STEPS / 4, MAXSPEED/4);
       moveCounter++;
       break;
     case 2: //180 degree turn Clockwise
-      Rotate(1, 1, STEPS / 2, 500);
+      Rotate(1, 1, STEPS / 2, MAXSPEED/2);
       moveCounter++;
       break;
     case 3: //180 degree turn Counter - Clockwise
-      Rotate(1, 0, STEPS / 2, 500);
+      Rotate(1, 0, STEPS / 2, MAXSPEED/2);
       moveCounter++;
       break;
     case 4: //270 degree turn Clockwise
-      Rotate(1, 1, (STEPS * 3) / 4 , 750);
+      Rotate(1, 1, (STEPS * 3) / 4, MAXSPEED * 0.75);
       moveCounter++;
       break;
     case 5: //270 degree turn Counter - Clockwise
-      Rotate(1, 0, (STEPS * 3) / 4 , 750);
+      Rotate(1, 0, (STEPS * 3) / 4, MAXSPEED * 0.75);
       moveCounter++;
       break;
     case 6: //360 degree turn Clockwise
-      Rotate(1, 1, STEPS , 1000);
+      Rotate(1, 1, STEPS, MAXSPEED);
       moveCounter++;
       break;
     case 7: //360 degree turn Clockwise
-      Rotate(1, 0, STEPS , 1000);
+      Rotate(1, 0, STEPS, MAXSPEED);
       moveCounter = 0;
       break;
     default:
       break;
     }
+  }
 }
