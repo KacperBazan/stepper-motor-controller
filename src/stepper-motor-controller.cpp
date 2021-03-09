@@ -17,19 +17,15 @@
 
 #include <Arduino.h>
 
-/*
- * CONSTANTS
- */
+/* CONSTANTS */
 const int LED = 16;
-const int STEPS = 200; //The particular motor I'm using has 200 steps.
-const int BUTTON[2] = {17, 18};
+const int STEPS = 200;       //The particular motor I'm using has 200 steps.
 const int TOGGLEBUTTON = 1; //Default button used for toggling enables.
-const int ENABLE[1] = {5};
+const int ENABLE = 5;
+const int BUTTON[2] = {17, 18};
 const int MOTORS[1][2] = {{2, 4}}; //dirPin followed by stepPin
 
-/*
- * VARIABLES
- */
+/* VARIABLES */
 int buttonState[2] = {0, 0};
 int lastButtonState[2] = {0, 0};
 int toggle = 0;
@@ -41,33 +37,19 @@ void setup()
 {
   Serial.begin(115200);
   Serial.flush();
-
+  pinMode(ENABLE, OUTPUT);
   pinMode(LED, OUTPUT);
-
   pinMode(BUTTON[0], INPUT);
   pinMode(BUTTON[1], INPUT);
 
+  digitalWrite(ENABLE, LOW); // Enable pin is active low.
+
   for (int i = 0; i < 1; i++)
   {
-    pinMode(ENABLE[i], OUTPUT);
-    /*
-    * The enable pin is active low.
-    * When it is tied high, the motors cannot spin.
-    * This is done to prevent any motor motion upon initialization.
-    */
-    digitalWrite(ENABLE[i], HIGH);
     for (int j = 0; j < 2; j++)
     {
       pinMode(MOTORS[i][j], OUTPUT);
     }
-  }
-}
-
-void ToggleEnables(int state)
-{
-  for (int i = 0; i < 1; i++)
-  {
-    digitalWrite(ENABLE[i], state);
   }
 }
 
@@ -83,7 +65,7 @@ void ToggleButton(int num)
       if (buttonState[num])
       {
         toggle = !toggle;
-        ToggleEnables(!toggle);
+        digitalWrite(ENABLE, !toggle);
         digitalWrite(LED, toggle);
       }
     }
@@ -134,40 +116,48 @@ void loop()
   ToggleButton(1);
   if (ReadButton(2))
   {
-    int MAXSPEED = 400;
+    int MAXSPEED = 1000;
     switch (moveCounter)
     {
     case 0: //90 degree turn Clockwise
-      Rotate(1, 1, STEPS / 4, MAXSPEED/4);
+      Rotate(1, 1, STEPS / 4, MAXSPEED / 4);
       moveCounter++;
+      Serial.println(moveCounter);
       break;
     case 1: //90 degree turn Counter - Clockwise
-      Rotate(1, 0, STEPS / 4, MAXSPEED/4);
+      Rotate(1, 0, STEPS / 4, MAXSPEED / 4);
       moveCounter++;
+      Serial.println(moveCounter);
       break;
     case 2: //180 degree turn Clockwise
-      Rotate(1, 1, STEPS / 2, MAXSPEED/2);
+      Rotate(1, 1, STEPS / 2, MAXSPEED / 2);
       moveCounter++;
+      Serial.println(moveCounter);
       break;
     case 3: //180 degree turn Counter - Clockwise
-      Rotate(1, 0, STEPS / 2, MAXSPEED/2);
+      Rotate(1, 0, STEPS / 2, MAXSPEED / 2);
       moveCounter++;
+      Serial.println(moveCounter);
       break;
     case 4: //270 degree turn Clockwise
       Rotate(1, 1, (STEPS * 3) / 4, MAXSPEED * 0.75);
       moveCounter++;
+      Serial.println(moveCounter);
       break;
     case 5: //270 degree turn Counter - Clockwise
       Rotate(1, 0, (STEPS * 3) / 4, MAXSPEED * 0.75);
       moveCounter++;
+      Serial.println(moveCounter);
       break;
     case 6: //360 degree turn Clockwise
       Rotate(1, 1, STEPS, MAXSPEED);
       moveCounter++;
+      Serial.println(moveCounter);
       break;
     case 7: //360 degree turn Clockwise
       Rotate(1, 0, STEPS, MAXSPEED);
       moveCounter = 0;
+      Serial.print(moveCounter);
       break;
     default:
       break;
