@@ -42,7 +42,7 @@ void setup()
   pinMode(BUTTON[0], INPUT);
   pinMode(BUTTON[1], INPUT);
 
-  digitalWrite(ENABLE, LOW); // Enable pin is active low.
+  digitalWrite(ENABLE, HIGH); // Enable pin is active low.
 
   for (int i = 0; i < 1; i++)
   {
